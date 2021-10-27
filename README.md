@@ -1,0 +1,11 @@
+# design-pattern
+- Builder
+- Factory Method
+- Singleton
+- Adapter
+- Decorator
+- Command
+- Memento
+- Observer
+- Strategy
+- Template Method
