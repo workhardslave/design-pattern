@@ -1,11 +1,14 @@
 package command;
 
+import memento.Memento;
+
 import javax.swing.*;
 import java.awt.event.*;
 
 public class DrawingApp extends JFrame {
     MacroCommand history = new MacroCommand();
     MacroCommand line = new MacroCommand();
+    Memento memento = new Memento(history);
 
     public DrawingApp(String title) {
         super(title);
@@ -15,11 +18,15 @@ public class DrawingApp extends JFrame {
 
         JButton undoButton = new JButton("undo");
         JButton clearButton = new JButton("clear");
+        JButton saveButton = new JButton("save");
+        JButton loadButton = new JButton("load");
 
         DrawCanvas canvas = new DrawCanvas(400, 400, history);
 
         buttonBox.add(undoButton);
         buttonBox.add(clearButton);
+        buttonBox.add(saveButton);
+        buttonBox.add(loadButton);
 
         mainBox.add(buttonBox);
         mainBox.add(canvas);
@@ -79,5 +86,23 @@ public class DrawingApp extends JFrame {
             history.clear();
             canvas.repaint();
         });
+
+        saveButton.addActionListener(e -> {
+            memento = saveState();
+        });
+
+        loadButton.addActionListener(e -> {
+            restoreState(memento);
+            canvas.setHistory(history);
+            canvas.repaint();
+        });
+    }
+
+    private Memento saveState() {
+        return new Memento(history);
+    }
+
+    private void restoreState(Memento memento) {
+        history = memento.getSavedState();
     }
 }

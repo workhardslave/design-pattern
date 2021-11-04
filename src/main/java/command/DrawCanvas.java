@@ -12,6 +12,11 @@ public class DrawCanvas extends Canvas implements Drawable {
         this.history = history;
     }
 
+    // Memento 패턴에서 사용하는 메서드
+    public void setHistory(MacroCommand history) {
+        this.history = history;
+    }
+
     @Override
     public void paint(Graphics g) {
         history.run();
